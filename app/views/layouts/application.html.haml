@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %title= full_title(yield(:title))
+    %meta{:content => "width=device-width, initial-scale=1.0, user-scalable=no", :name => "viewport"} 
+    %link{:href => "http://fonts.googleapis.com/css?family=Tangerine", :rel => "stylesheet", :type => "text/css"}
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = render 'layouts/shim'
+  %body
+    = render 'layouts/header'
+    .container-fluid
+      - flash.each do |key, value|
+        = content_tag(:div, value, class: "alert alert-#{key}")
+      .row-fluid
+        .span10.offset1.content
+          = yield
+        .span1
+      = render 'layouts/footer'
+      = debug(params) if Rails.env.development?
